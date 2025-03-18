@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Exchange List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    #search-input {
+      width: 100%; /* Make the input field 50% of the parent container's width */
+      padding: 10px; /* Add some padding to make the input field more comfortable to use */
+      font-size: 16px; /* Increase the font size to make the input field more readable */
+      border: 1px solid #ccc; /* Add a border to make the input field more visually appealing */
+    }
+    form {
+      position: sticky;
+      top: 0;
+    }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">🔥 Crypto Exchange List</h1>
+
+        <!-- 검색 폼 -->
+        <div style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">
+            <h1 class="text-3xl font-bold mb-6">🔥 Crypto Exchange List</h1>
+            <form method="POST" class="mb-6" style="display: flex; align-items: center; justify-content: center;">
+              <input type="text" id="search-input" name="keyword" placeholder="Please input the Crypto Exchange to search." style="width: 70ch; padding: 10px; font-size: 16px;">
+              <button type="submit" value="Search" class="bg-blue-500 text-white p-2 rounded" style="margin-left: 10px;">Search</button>
+              <a href="/" class="bg-gray-500 text-white p-2 rounded" style="margin-left: 10px;">Clear</a>
+            </form>
+        </div>
+
+        <div style="padding-top: 60px;">
+            {% if no_result_message %}
+            <p class="text-red-500 font-bold">{{ no_result_message }}</p>
+            {% endif %}
+
+            <!-- 검색 결과 (한 줄로 표시) -->
+            {% if results %}
+            <div class="flex space-x-4">
+                {% for result in results %}
+                    <div class="inline-block bg-gray-200 p-2 rounded">{{ result.name }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 거래소 목록 -->
+        <div class="bg-white shadow-md rounded-lg p-4">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-3 text-left">#</th>
+                        <th class="p-3 text-left">Logo</th>
+                        <th class="p-3 text-left">Exchange</th>
+                        <th class="p-3 text-left">Established Year</th>
+                        <th class="p-3 text-left">Country</th>
+                        <th class="p-3 text-left">Origin</th>
+                        <th class="p-3 text-left">Update Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exchange in exchanges %}
+                    <tr class="border-b">
+                        <td class="p-3">{{ loop.index }}</td>
+                        <td class="p-3">
+                            <img src="{{ exchange.logo_image }}" alt="{{ exchange.name }}" class="w-10 h-10 rounded-full">
+                        </td>
+                        <td class="p-3 font-semibold">
+                            <a href="{{ exchange.url }}" target="_blank">{{ exchange.name }}</a>
+                        </td>
+                        <td class="p-3">{{ exchange.year_established }}</td>
+                        <td class="p-3">{{ exchange.country }}</td>
+                        <td class="p-3">{{ exchange.origin }}</td>
+                        <td class="p-3">{{ exchange.update_dt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
