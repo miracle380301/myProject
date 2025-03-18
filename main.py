@@ -1,4 +1,5 @@
 import datetime
+import os
 from ssl import Options
 from fastapi import FastAPI, Depends, Request
 from fastapi.responses import HTMLResponse
@@ -27,12 +28,15 @@ from webScrapings.coinmarketcap1 import coinmarketcap_fetch_and_store_exchanges_
 from webScrapings.cryptocompare import crytocompare_fetch_and_store_exchanges
 
 import csv
+from pathlib import Path
 
 from webScrapings.cryptocompare1 import crytocompare_fetch_and_store_exchanges_csv
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-csv_file_path = "D:/projects/myProject/__pycache__/files/exchanges.csv"
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 파일의 디렉토리
+csv_file_path = os.path.join(BASE_DIR, "__pycache__", "files", "exchanges.csv")
 
 # DB 세션의존성
 def get_db():
