@@ -1,0 +1,50 @@
+{% include 'header.html' %}
+
+<style>
+    /* 배경에 부드러운 그라디언트 효과 추가 */
+    body {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    }
+</style>
+
+<!-- 전체 레이아웃을 화면 중앙 정렬 -->
+<div class="flex items-center justify-center min-h-screen px-4 sm:px-6">
+    <!-- 메인 컨테이너 -->
+    <div class="bg-white shadow-lg rounded-lg p-6 sm:p-10 max-w-3xl w-full text-center">
+        <!-- 로고 + 제목 (가로 정렬) -->
+        <div class="flex flex-col sm:flex-row items-center justify-center mb-6">
+            <img src="/static/images/miracle_logo.png" alt="Miracle Logo" class="w-40 sm:w-56">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 sm:ml-6 mt-4 sm:mt-0">
+                🚀 Miracle, <br>
+                Why We Started
+            </h1>
+        </div>
+
+        <!-- 설명 -->
+        <div class="text-gray-700 leading-relaxed space-y-4">
+            <p>
+                {{ gettext('Financial fraud has been increasing recently.')}}
+                {{ gettext('In particular, more people are falling victim to scams when using untrustworthy foreign cryptocurrency exchanges.')}}
+            </p>
+            <p>
+                {{ gettext('For the normal person, it is difficult to determine which exchanges are official.')}}
+            </p>
+            <p class="font-semibold text-purple-600">
+                {{ gettext('Miracle created this site to address this issue and help prevent potential losses in advance.')}}
+            </p>
+            <p>
+                {{ gettext('We provide reliable exchange information to help you trade cryptocurrencies more safely.')}}
+            </p>
+        </div>
+
+        <!-- 닫기 버튼 -->
+        <div class="mt-8">
+            <button onclick="window.close()"
+                class="bg-gray-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-gray-700 transition text-lg font-semibold">
+                ❌ 닫기
+            </button>
+        </div>
+    </div>
+</div>
+
+{% include 'footer.html' %}

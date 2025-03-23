@@ -1,0 +1,44 @@
+msgid "Crypto Exchange List"
+msgstr "Crypto Exchange List"
+
+msgid "The following cryptocurrency exchange list is based on information from the following sources."
+msgstr "The following cryptocurrency exchange list is based on information from the following sources."
+
+msgid "Show more"
+msgstr "Show more"
+
+msgid "Enter the name of the crypto exchange you want to search for!"
+msgstr "Enter the name of the crypto exchange you want to search for!"
+
+msgid "Search"
+msgstr "Search"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Click the Exchange link to verify if it is the official website."
+msgstr "Click the Exchange link to verify if it is the official website."
+
+msgid "The latest data is updated once a week."
+msgstr "The latest data is updated once a week."
+
+msgid "Data provided by"
+msgstr "Data provided by"
+
+msgid "This service operates solely on publicly available free APIs, and the accuracy of the provided information should be independently verified."
+msgstr "This service operates solely on publicly available free APIs, and the accuracy of the provided information should be independently verified."
+
+msgid "Financial fraud has been increasing recently."
+msgstr "Financial fraud has been increasing recently."
+
+msgid "In particular, more people are falling victim to scams when using untrustworthy foreign cryptocurrency exchanges."
+msgstr "In particular, more people are falling victim to scams when using untrustworthy foreign cryptocurrency exchanges."
+
+msgid "For the normal person, it is difficult to determine which exchanges are official."
+msgstr "For the normal person, it is difficult to determine which exchanges are official."
+
+msgid "Miracle created this site to address this issue and help prevent potential losses in advance."
+msgstr "Miracle created this site to address this issue and help prevent potential losses in advance."
+
+msgid "We provide reliable exchange information to help you trade cryptocurrencies more safely."
+msgstr "We provide reliable exchange information to help you trade cryptocurrencies more safely."

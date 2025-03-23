@@ -1,85 +1,123 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Exchange List</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-    #search-input {
-      width: 100%; /* Make the input field 50% of the parent container's width */
-      padding: 10px; /* Add some padding to make the input field more comfortable to use */
-      font-size: 16px; /* Increase the font size to make the input field more readable */
-      border: 1px solid #ccc; /* Add a border to make the input field more visually appealing */
-    }
-    form {
-      position: sticky;
-      top: 0;
-    }
-    </style>
-</head>
-<body class="bg-gray-100">
-    <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-6">🔥 Crypto Exchange List</h1>
+{% include 'header.html' %}
+    <div class="container mx-auto p-4 sm:p-6">
+        <h1 class="text-2xl sm:text-3xl font-bold text-center mb-4">🔥 Crypto Exchange List</h1>
 
         <!-- 검색 폼 -->
-        <div style="position: fixed; top: 0; left: 0; width: 100%; background-color: #fff; padding: 10px; border-bottom: 1px solid #ddd; text-align: center;">
-            <h1 class="text-3xl font-bold mb-6">🔥 Crypto Exchange List</h1>
-            <form method="POST" class="mb-6" style="display: flex; align-items: center; justify-content: center;">
-              <input type="text" id="search-input" name="keyword" placeholder="Please input the Crypto Exchange to search." style="width: 70ch; padding: 10px; font-size: 16px;">
-              <button type="submit" value="Search" class="bg-blue-500 text-white p-2 rounded" style="margin-left: 10px;">Search</button>
-              <a href="/" class="bg-gray-500 text-white p-2 rounded" style="margin-left: 10px;">Clear</a>
+        <div class="sticky top-0 left-0 w-full bg-white shadow-md p-3 z-10">
+            <!-- 데이터 출처 정보 -->
+            <div class="text-gray-500 text-sm text-center mb-4" x-data="{ showList: false }">
+                <div class="text-gray-500 text-xs sm:text-sm text-center mb-3">
+                    📌{{ gettext('The following cryptocurrency exchange list is based on information from the following sources.') }}
+                    <button @click="showList = !showList" class="ml-2 text-blue-500 underline focus:outline-none">
+                        {{ gettext('Show more') }}
+                    </button>
+                </div>
+                <!-- 숨겨진 리스트 -->
+                <div class="mt-2 w-full max-w-lg mx-auto bg-white shadow-lg rounded-lg p-4" x-show="showList" x-transition>
+
+                    <!-- 업데이트 안내 문구 -->
+                    <p class="text-xs text-green-600 font-semibold mb-3">
+                        📋 {{ gettext('The latest data is updated once a week.') }}
+                    </p>
+                    <ul class="divide-y divide-gray-200">
+                        <li class="flex items-center justify-between py-3">
+                            <a href="https://www.coingecko.com" target="_blank" class="text-blue-500 font-medium hover:underline">
+                                🔗 {{ gettext('Data provided by') }} CoinGecko 
+                            </a>
+                            <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
+                                {{ coingecko_update_date }}
+                            </span>
+                        </li>
+                        <li class="flex items-center justify-between py-3">
+                            <a href="https://www.cryptocompare.com/" target="_blank" class="text-blue-500 font-medium hover:underline">
+                                🔗 {{ gettext('Data provided by') }} CryptoCompare
+                            </a>
+                            <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
+                                {{ cryptocompare_update_date }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <form method="POST" class="flex flex-col sm:flex-row items-center justify-center gap-2">
+                <input type="text" id="search-input" name="keyword" 
+                    placeholder="🔍 {{ gettext('Enter the name of the crypto exchange you want to search for!')}}" 
+                    class="w-full sm:w-2/3 p-1 text-xs sm:text-sm border rounded">
+                <button type="submit" value="Search" class="bg-blue-500 text-white p-1 rounded w-full sm:w-auto text-sm">Search</button>
+                <a href="/" class="bg-gray-500 text-white p-1 rounded w-full sm:w-auto text-sm text-center">Clear</a>
             </form>
         </div>
 
-        <div style="padding-top: 60px;">
+        <div class="pt-10">
             {% if no_result_message %}
-            <p class="text-red-500 font-bold">{{ no_result_message }}</p>
-            {% endif %}
-
-            <!-- 검색 결과 (한 줄로 표시) -->
-            {% if results %}
-            <div class="flex space-x-4">
-                {% for result in results %}
-                    <div class="inline-block bg-gray-200 p-2 rounded">{{ result.name }}</div>
-                {% endfor %}
-            </div>
+            <p class="text-red-500 font-bold text-xs sm:text-sm text-center">{{ no_result_message.replace('\n', '<br>') | safe }}</p>
+            {% else %}
+            <p class="text-blue-500 font-bold text-xs sm:text-sm text-center">💡{{ gettext('Click the Exchange link to verify if it is the official website.') }}</p>
             {% endif %}
         </div>
 
         <!-- 거래소 목록 -->
-        <div class="bg-white shadow-md rounded-lg p-4">
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-3 text-left">#</th>
-                        <th class="p-3 text-left">Logo</th>
-                        <th class="p-3 text-left">Exchange</th>
-                        <th class="p-3 text-left">Established Year</th>
-                        <th class="p-3 text-left">Country</th>
-                        <th class="p-3 text-left">Origin</th>
-                        <th class="p-3 text-left">Update Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for exchange in exchanges %}
-                    <tr class="border-b">
-                        <td class="p-3">{{ loop.index }}</td>
-                        <td class="p-3">
-                            <img src="{{ exchange.logo_image }}" alt="{{ exchange.name }}" class="w-10 h-10 rounded-full">
-                        </td>
-                        <td class="p-3 font-semibold">
-                            <a href="{{ exchange.url }}" target="_blank">{{ exchange.name }}</a>
-                        </td>
-                        <td class="p-3">{{ exchange.year_established }}</td>
-                        <td class="p-3">{{ exchange.country }}</td>
-                        <td class="p-3">{{ exchange.origin }}</td>
-                        <td class="p-3">{{ exchange.update_dt }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="bg-white shadow-md rounded-lg p-3 mt-4 overflow-hidden">
+            <div class="overflow-auto" style="height: 450px; min-height: 450px;"> <!-- 높이 고정 -->
+                <table class="w-full border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-gray-200">
+                            <th class="p-2 text-left">No</th>
+                            <th class="p-2 text-left">Logo</th>
+                            <th class="p-2 text-left">Exchange</th>
+                            <th class="p-2 text-left hidden md:table-cell">Year</th>
+                            <th class="p-2 text-left hidden md:table-cell">Country</th>
+                            <th class="p-2 text-left hidden md:table-cell">Origin</th>
+                            <th class="p-2 text-left hidden md:table-cell">Update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for exchange in exchanges[start_idx:end_idx] %}
+                        <tr class="border-b">
+                            <td class="p-2">{{ loop.index + start_idx }}</td>
+                            <td class="p-2">
+                                <img src="{{ exchange.logo_image }}" alt="{{ exchange.name }}" class="w-6 h-6 rounded-full">
+                            </td>
+                            <td class="p-2 font-semibold">
+                                <a href="{{ exchange.url }}" target="_blank" class="text-blue-500 underline">
+                                    {{ exchange.name }}
+                                </a>
+                            </td>
+                            <td class="p-2 hidden md:table-cell">{{ exchange.year_established }}</td>
+                            <td class="p-2 hidden md:table-cell">{{ exchange.country }}</td>
+                            <td class="p-2 hidden md:table-cell">{{ exchange.origin }}</td>
+                            <td class="p-2 hidden md:table-cell">{{ exchange.update_dt }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 페이지네이션 -->
+        <div class="flex justify-center items-center mt-4 space-x-1">
+            {% if page > 1 %}
+            <a href="?page=1" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-sm">«</a>
+            <a href="?page={{ page - 1 }}" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-sm">‹</a>
+            {% endif %}
+
+            {% for p in range(page-2, page+5) if 1 <= p <= total_pages %}
+                {% if p == page %}
+                <span class="px-3 py-1 rounded-md bg-blue-500 text-white font-bold shadow-md text-sm">{{ p }}</span>
+                {% else %}
+                <a href="?page={{ p }}" class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-300 transition text-sm">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
+
+            {% if page < total_pages %}
+            <a href="?page={{ page + 1 }}" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-sm">›</a>
+            <a href="?page={{ total_pages }}" class="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition text-sm">»</a>
+            {% endif %}
         </div>
     </div>
+
+    {% include 'footer.html' %}
+
 </body>
 </html>

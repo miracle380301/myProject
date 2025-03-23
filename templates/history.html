@@ -1,0 +1,32 @@
+{% include 'header.html' %}
+<body class="bg-gray-100 flex items-center justify-center min-h-screen w-full">
+
+    <div class="bg-white shadow-lg rounded-lg p-6 sm:p-10 w-full max-w-5xl h-screen flex flex-col justify-center">
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 text-center">History</h1>
+        
+        <p class="text-gray-700 leading-relaxed text-center mb-6">
+            {{ gettext('This service operates solely on publicly available free APIs, and the accuracy of the provided information should be independently verified.') }}
+        </p>
+
+        <!-- 목록 스타일 적용 -->
+        <h2 class="text-2xl font-semibold mt-8 mb-4">Data Updated</h2>
+        <ul class="text-gray-700 space-y-4 list-disc pl-6">
+            <li>
+                <span class="font-semibold">CoinGecko [2025-03-18 15:14:20]</span>
+            </li>
+            <li>
+                <span class="font-semibold">CryptoCompare [2025-03-18 15:15:28]</span>
+            </li>
+        </ul>
+
+        <!-- 닫기 버튼 -->
+        <div class="mt-10 text-center">
+            <button onclick="window.close()" 
+                class="bg-gray-600 text-white px-8 py-4 rounded-lg shadow-md hover:bg-gray-700 transition text-lg font-semibold">
+                ❌ Close
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>

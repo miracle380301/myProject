@@ -1,11 +1,11 @@
-from sqlalchemy.orm import Session
-from sqlalchemy import or_
 import requests
+from common.utils import check_name_exists, save_to_csv
 from model import Exchange
+import datetime
 
-def coingecko_fetch_and_store_exchanges(db: Session):
-    if db is None:
-        raise ValueError("Database session is not initialized")
+def coingecko_fetch_and_store_exchanges_csv(csv_file):
+    if csv_file is None:
+        raise ValueError("File doesn't exists.")
     
     try:
         url = "https://api.coingecko.com/api/v3/exchanges"
@@ -19,33 +19,34 @@ def coingecko_fetch_and_store_exchanges(db: Session):
 
         if response.status_code == 200:
             exchanges_data = response.json()
-            print(exchanges_data)
+            exchanges = []
+            i = 1
 
             for exchange_data in exchanges_data:
+                origin = 'CoinGecko'
+                id = i
                 name = exchange_data.get('name', 'N/A')
-                link = exchange_data.get('url', 'N/A')
-                logo = exchange_data.get('image', 'N/A')
+                year_established = exchange_data.get('year_established', 'N/A')
+                country = exchange_data.get('country', 'N/A')
+                url = exchange_data.get('url', 'N/A')
+                logo_image = exchange_data.get('image', 'N/A')
+                create_dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                update_dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-                # 중복 체크: 동일한 name, link, logo 값이 있는지 확인
-                existing = db.query(Exchange).filter(
-                    or_(
-                        Exchange.name == name,
-                    )
-                ).first()  # 첫 번째로 일치하는 항목을 찾습니다.
+                row_exchange = Exchange(origin=origin, id=id, name=name, year_established=year_established, country=country, url=url, logo_image=logo_image, create_dt=create_dt, update_dt=update_dt)
 
-                if existing:
+                # Check duplicate rows
+                if check_name_exists(name, csv_file):
+                    print(f"Exchange with name '{name}' already exists")
                     continue
-                else:
-                    new_exchange = Exchange(
-                        name=name,
-                        link=link,
-                        logo=logo,
-                        origin='coingecko'
-                    )
 
-                    db.add(new_exchange)  # 세션에 추가
-                    db.commit()  # DB에 커밋하여 저장
-                    print("새로운 exchange가 저장되었습니다:", new_exchange)
+                else:
+                    exchanges.append(row_exchange)
+                    i += 1
+        
+            #Save Data
+            if exchanges is not None:
+                save_to_csv(exchanges, csv_file)
         else:
             print(f"Failed to fetch data from CoinGecko API. Status code: {response.status_code}")
     except Exception as e:

@@ -1,14 +1,14 @@
 import csv
 import os
 
-def get_exchange_list(file_path):
-    exchange_list = []
-    with open(file_path, 'r', encoding='utf-8', errors='ignore') as csvfile:
-        reader = csv.DictReader(csvfile, fieldnames=['origin','id', 'name', 'year_established','country','url','logo_image','create_dt', 'update_dt'])
-        next(reader, None)
-        for row in reader:
-            exchange_list.append(row)
-    return exchange_list
+def paginate_exchanges(exchange_list, page, items_per_page=50):
+    total_exchanges = len(exchange_list)
+    total_pages = (total_exchanges + items_per_page - 1) // items_per_page  # 전체 페이지 수
+
+    start_idx = (page - 1) * items_per_page
+    end_idx = min(start_idx + items_per_page, total_exchanges)
+
+    return exchange_list[start_idx:end_idx], total_pages
 
 def check_name_exists(name, file_path):
     with open(file_path, 'r', encoding='utf-8') as csvfile:

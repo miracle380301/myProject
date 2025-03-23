@@ -1,0 +1,44 @@
+msgid "Crypto Exchange List"
+msgstr "Crypto Exchange List"
+
+msgid "The following cryptocurrency exchange list is based on information from the following sources."
+msgstr "아래 암호화폐 거래소 목록은 다음의 사이트 정보를 기반으로 제공됩니다."
+
+msgid "Show more"
+msgstr "더 보기"
+
+msgid "Enter the name of the crypto exchange you want to search for!"
+msgstr "검색할 암호화폐 거래소의 이름을 입력하세요!"
+
+msgid "Search"
+msgstr "찾기"
+
+msgid "Clear"
+msgstr "초기화"
+
+msgid "Click the Exchange link to verify if it is the official website."
+msgstr "Exchange 링크를 클릭하여 해당 거래소의 공식 웹사이트인지 확인하세요."
+
+msgid "The latest data is updated once a week."
+msgstr "최신 데이터는 매주 한 번 업데이트됩니다."
+
+msgid "Data provided by"
+msgstr "데이터 제공"
+
+msgid "This service operates solely on publicly available free APIs, and the accuracy of the provided information should be independently verified."
+msgstr "현재 본 서비스는 무료로 제공되는 API를 기반으로 운영되므로, 제공되는 정보의 정확성을 별도로 검증할 필요가 있습니다."
+
+msgid "Financial fraud has been increasing recently."
+msgstr "최근 금융 사기가 점점 증가하고 있습니다."
+
+msgid "In particular, more people are falling victim to scams when using untrustworthy foreign cryptocurrency exchanges."
+msgstr "특히 신뢰할 수 없는 해외 암호화폐 거래소를 이용하다가 피해를 입는 사람들이 많아지고 있습니다."
+
+msgid "For the normal person, it is difficult to determine which exchanges are official."
+msgstr "일반인들에게는 어떤 거래소가 공식적인지 판별하기 어려운 현실입니다."
+
+msgid "Miracle created this site to address this issue and help prevent potential losses in advance."
+msgstr "Miracle은 이러한 문제를 해결하고, 사전에 피해를 예방할 수 있도록 이 사이트를 만들었습니다."
+
+msgid "We provide reliable exchange information to help you trade cryptocurrencies more safely."
+msgstr "신뢰할 수 있는 거래소 정보를 제공하여, 여러분이 보다 안전하게 암호화폐를 거래 할 수 있도록 돕겠습니다."
