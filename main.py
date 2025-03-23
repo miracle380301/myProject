@@ -124,8 +124,7 @@ async def index(request: Request):
             if keyword and keyword in name.lower():
                 exchanges.append(row)
 
-    no_result_message = "⚠️입력하신 거래소는 합법적인 금융 기관이나 공인된 투자 플랫폼이 아닐 가능성이 있습니다.\n" \
-                        "따라서, 투자하시기 전에 신중한 판단을 하시길 권고 드립니다." if not exchanges else ""
+    no_result_message = "no_result" if not exchanges else ""
 
     # 🔹 페이징 처리
     page = int(1)  # 기본값 1

@@ -51,7 +51,9 @@
 
         <div class="pt-10">
             {% if no_result_message %}
-            <p class="text-red-500 font-bold text-xs sm:text-sm text-center">{{ no_result_message.replace('\n', '<br>') | safe }}</p>
+            <p class="text-red-500 font-bold text-xs sm:text-sm text-center">⚠️{{ gettext('The exchange you entered may not be a legitimate financial institution or a regulated investment platform.') }}
+                <br>{{ gettext('Therefore, we strongly recommend exercising caution and making a careful decision before investing.')}}
+            </p>
             {% else %}
             <p class="text-blue-500 font-bold text-xs sm:text-sm text-center">💡{{ gettext('Click the Exchange link to verify if it is the official website.') }}</p>
             {% endif %}
