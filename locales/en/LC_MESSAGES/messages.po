@@ -48,3 +48,6 @@ msgstr "The exchange you entered may not be a legitimate financial institution o
 
 msgid "Therefore, we strongly recommend exercising caution and making a careful decision before investing."
 msgstr "Therefore, we strongly recommend exercising caution and making a careful decision before investing."
+
+msgid "If the link doesn’t open, please check with the provider again."
+msgstr "If the link doesn’t open, please check with the provider again."

@@ -48,3 +48,6 @@ msgstr "입력하신 거래소는 합법적인 금융 기관이나 공인된 투
 
 msgid "Therefore, we strongly recommend exercising caution and making a careful decision before investing."
 msgstr "따라서, 투자하시기 전에 신중한 판단을 하시길 권고 드립니다."
+
+msgid "If the link doesn’t open, please check with the provider again."
+msgstr "링크가 열리지 않으면 제공처에서 다시 확인해 주세요."

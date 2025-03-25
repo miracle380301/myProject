@@ -1,102 +1,132 @@
 {% include 'header.html' %}
-    <div class="container mx-auto p-4 sm:p-6">
-        <h1 class="text-2xl sm:text-3xl font-bold text-center mb-4">🔥 Crypto Exchange List</h1>
+<div class="flex flex-col min-h-screen">
+    <!-- Main Content -->
+    <div class="flex-grow">
+        <div class="container mx-auto p-4 sm:p-6 flex">
+            <!-- Left Frame (Hidden on Mobile) -->
+            <div class="hidden sm:block w-1/4 bg-gray-100 shadow-md rounded-lg p-4" x-data="{ open: false }">
+                <!-- Accordion Header (Always Visible) -->
+                <button @click="open = !open" class="w-full text-left text-md font-bold mb-4 flex items-center justify-between">
+                    🌍 {{ gettext('Exchange Lists') }}
+                    <svg :class="{ 'rotate-180': open }" class="w-5 h-5 transform transition-transform">
+                        <path fill="currentColor" d="M7 10l5 5 5-5H7z" />
+                    </svg>
+                </button>
 
-        <!-- 검색 폼 -->
-        <div class="sticky top-0 left-0 w-full bg-white shadow-md p-3 z-10">
-            <!-- 데이터 출처 정보 -->
-            <div class="text-gray-500 text-sm text-center mb-4" x-data="{ showList: false }">
-                <div class="text-gray-500 text-xs sm:text-sm text-center mb-3">
-                    📌{{ gettext('The following cryptocurrency exchange list is based on information from the following sources.') }}
-                    <button @click="showList = !showList" class="ml-2 text-blue-500 underline focus:outline-none">
-                        {{ gettext('Show more') }}
-                    </button>
+                <!-- Accordion Content -->
+                <div :class="{ 'hidden': !open }" class="sm:block">
+                    <!-- Overseas Exchange List -->
+                    <a href="/?type=overseas" class="text-sm font-semibold mb-2 block text-blue-500 hover:underline">
+                        {{ gettext('Overseas Exchanges') }}
+                    </a>
+
+                    <!-- Domestic Exchange List -->
+                    <a href="javascript:alert('In preparation')" class="text-sm font-semibold mt-6 mb-2 block text-blue-500 hover:underline">
+                        {{ gettext('Domestic Exchanges') }}
+                    </a>
                 </div>
-                <!-- 숨겨진 리스트 -->
-                <div class="mt-2 w-full max-w-lg mx-auto bg-white shadow-lg rounded-lg p-4" x-show="showList" x-transition>
+            </div>
 
-                    <!-- 업데이트 안내 문구 -->
-                    <p class="text-xs text-green-600 font-semibold mb-3">
-                        📋 {{ gettext('The latest data is updated once a week.') }}
+            <!-- Main Content -->
+            <div class="w-full sm:w-3/4 pl-4">
+                <h1 class="text-2xl sm:text-3xl font-bold text-center mb-4">🔥 Crypto Exchange List</h1>
+
+                <!-- Search Form -->
+                <div class="sticky top-0 left-0 w-full bg-white shadow-md p-3 z-10">
+                    <!-- Data Source Information -->
+                    <div class="text-gray-500 text-sm text-center mb-4" x-data="{ showList: false }">
+                        <div class="text-gray-500 text-xs sm:text-sm text-center mb-3">
+                            📌{{ gettext('The following cryptocurrency exchange list is based on information from the following sources.') }}
+                            <button @click="showList = !showList" class="ml-2 text-blue-500 underline focus:outline-none">
+                                {{ gettext('Show more') }}
+                            </button>
+                        </div>
+                        <!-- Hidden List -->
+                        <div class="mt-2 w-full max-w-lg mx-auto bg-white shadow-lg rounded-lg p-4" x-show="showList" x-transition>
+                            <!-- Update Notice -->
+                            <p class="text-xs text-green-600 font-semibold mb-3">
+                                📋 {{ gettext('The latest data is updated once a week.') }}
+                            </p>
+                            <ul class="divide-y divide-gray-200">
+                                <li class="flex items-center justify-between py-3">
+                                    <a href="https://www.coingecko.com" target="_blank" class="text-blue-500 font-medium hover:underline">
+                                        🔗 {{ gettext('Data provided by') }} CoinGecko 
+                                    </a>
+                                    <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
+                                        {{ coingecko_update_date }}
+                                    </span>
+                                </li>
+                                <li class="flex items-center justify-between py-3">
+                                    <a href="https://www.cryptocompare.com/" target="_blank" class="text-blue-500 font-medium hover:underline">
+                                        🔗 {{ gettext('Data provided by') }} CryptoCompare
+                                    </a>
+                                    <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
+                                        {{ cryptocompare_update_date }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <form method="POST" class="flex flex-col sm:flex-row items-center justify-center gap-2">
+                        <input type="text" id="search-input" name="keyword" 
+                            placeholder="🔍 {{ gettext('Enter the name of the crypto exchange you want to search for!')}}" 
+                            class="w-full sm:w-2/3 p-1 text-xs sm:text-sm border rounded">
+                        <button type="submit" value="Search" class="bg-blue-500 text-white p-1 rounded w-full sm:w-auto text-sm">Search</button>
+                        <a href="/" class="bg-gray-500 text-white p-1 rounded w-full sm:w-auto text-sm text-center">Clear</a>
+                    </form>
+                </div>
+
+                <div class="pt-10">
+                    {% if no_result_message %}
+                    <p class="text-red-500 font-bold text-xs sm:text-sm text-center">⚠️{{ gettext('The exchange you entered may not be a legitimate financial institution or a regulated investment platform.') }}
+                        <br>{{ gettext('Therefore, we strongly recommend exercising caution and making a careful decision before investing.')}}
                     </p>
-                    <ul class="divide-y divide-gray-200">
-                        <li class="flex items-center justify-between py-3">
-                            <a href="https://www.coingecko.com" target="_blank" class="text-blue-500 font-medium hover:underline">
-                                🔗 {{ gettext('Data provided by') }} CoinGecko 
-                            </a>
-                            <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
-                                {{ coingecko_update_date }}
-                            </span>
-                        </li>
-                        <li class="flex items-center justify-between py-3">
-                            <a href="https://www.cryptocompare.com/" target="_blank" class="text-blue-500 font-medium hover:underline">
-                                🔗 {{ gettext('Data provided by') }} CryptoCompare
-                            </a>
-                            <span class="text-gray-500 text-sm bg-gray-100 px-2 py-1 rounded-md">
-                                {{ cryptocompare_update_date }}
-                            </span>
-                        </li>
-                    </ul>
+                    {% else %}
+                    <p class="text-blue-500 font-bold text-xs sm:text-sm text-center">💡{{ gettext('Click the Exchange link to verify if it is the official website.') }}
+                        <br>{{ gettext('If the link doesn’t open, please check with the provider again.')}}
+                    </p>
+                    {% endif %}
                 </div>
-            </div>
 
-            <form method="POST" class="flex flex-col sm:flex-row items-center justify-center gap-2">
-                <input type="text" id="search-input" name="keyword" 
-                    placeholder="🔍 {{ gettext('Enter the name of the crypto exchange you want to search for!')}}" 
-                    class="w-full sm:w-2/3 p-1 text-xs sm:text-sm border rounded">
-                <button type="submit" value="Search" class="bg-blue-500 text-white p-1 rounded w-full sm:w-auto text-sm">Search</button>
-                <a href="/" class="bg-gray-500 text-white p-1 rounded w-full sm:w-auto text-sm text-center">Clear</a>
-            </form>
-        </div>
-
-        <div class="pt-10">
-            {% if no_result_message %}
-            <p class="text-red-500 font-bold text-xs sm:text-sm text-center">⚠️{{ gettext('The exchange you entered may not be a legitimate financial institution or a regulated investment platform.') }}
-                <br>{{ gettext('Therefore, we strongly recommend exercising caution and making a careful decision before investing.')}}
-            </p>
-            {% else %}
-            <p class="text-blue-500 font-bold text-xs sm:text-sm text-center">💡{{ gettext('Click the Exchange link to verify if it is the official website.') }}</p>
-            {% endif %}
-        </div>
-
-        <!-- 거래소 목록 -->
-        <div class="bg-white shadow-md rounded-lg p-3 mt-4 overflow-hidden">
-            <div class="overflow-auto" style="height: 450px; min-height: 450px;"> <!-- 높이 고정 -->
-                <table class="w-full border-collapse text-xs sm:text-sm">
-                    <thead>
-                        <tr class="bg-gray-200">
-                            <th class="p-2 text-left">No</th>
-                            <th class="p-2 text-left">Logo</th>
-                            <th class="p-2 text-left">Exchange</th>
-                            <th class="p-2 text-left hidden md:table-cell">Year</th>
-                            <th class="p-2 text-left hidden md:table-cell">Country</th>
-                            <th class="p-2 text-left hidden md:table-cell">Origin</th>
-                            <th class="p-2 text-left hidden md:table-cell">Update</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for exchange in exchanges[start_idx:end_idx] %}
-                        <tr class="border-b">
-                            <td class="p-2">{{ loop.index + start_idx }}</td>
-                            <td class="p-2">
-                                <img src="{{ exchange.logo_image }}" alt="{{ exchange.name }}" class="w-6 h-6 rounded-full">
-                            </td>
-                            <td class="p-2 font-semibold">
-                                <a href="{{ exchange.url }}" target="_blank" class="text-blue-500 underline">
-                                    {{ exchange.name }}
-                                </a>
-                            </td>
-                            <td class="p-2 hidden md:table-cell">{{ exchange.year_established }}</td>
-                            <td class="p-2 hidden md:table-cell">{{ exchange.country }}</td>
-                            <td class="p-2 hidden md:table-cell">{{ exchange.origin }}</td>
-                            <td class="p-2 hidden md:table-cell">{{ exchange.update_dt }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
+                <!-- Exchange List -->
+                <div class="bg-white shadow-md rounded-lg p-3 mt-4 overflow-hidden">
+                    <div class="overflow-auto" style="height: 450px; min-height: 450px;"> <!-- Fixed height -->
+                        <table class="w-full border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-200">
+                                    <th class="p-2 text-left">No</th>
+                                    <th class="p-2 text-left">Logo</th>
+                                    <th class="p-2 text-left">Exchange</th>
+                                    <th class="p-2 text-left hidden md:table-cell">Year</th>
+                                    <th class="p-2 text-left hidden md:table-cell">Country</th>
+                                    <th class="p-2 text-left hidden md:table-cell">Origin</th>
+                                    <th class="p-2 text-left hidden md:table-cell">Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for exchange in exchanges[start_idx:end_idx] %}
+                                <tr class="border-b">
+                                    <td class="p-2">{{ loop.index + start_idx }}</td>
+                                    <td class="p-2">
+                                        <img src="{{ exchange.logo_image }}" alt="{{ exchange.name }}" class="w-6 h-6 rounded-full">
+                                    </td>
+                                    <td class="p-2 font-semibold">
+                                        <a href="{{ exchange.url }}" target="_blank" class="text-blue-500 underline">
+                                            {{ exchange.name }}
+                                        </a>
+                                    </td>
+                                    <td class="p-2 hidden md:table-cell">{{ exchange.year_established }}</td>
+                                    <td class="p-2 hidden md:table-cell">{{ exchange.country }}</td>
+                                    <td class="p-2 hidden md:table-cell">{{ exchange.origin }}</td>
+                                    <td class="p-2 hidden md:table-cell">{{ exchange.update_dt }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            
         <!-- 페이지네이션 -->
         <div class="flex justify-center items-center mt-4 space-x-1">
             {% if page > 1 %}
@@ -118,8 +148,7 @@
             {% endif %}
         </div>
     </div>
-
+</div>
+    <!-- Footer -->
     {% include 'footer.html' %}
-
-</body>
-</html>
+</div>
